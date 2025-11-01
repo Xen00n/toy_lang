@@ -24,9 +24,12 @@ int main() {
     } while(tok.type != TokenType::EndOfFile);
 
     initParseTable();
-
-    if(parse(tokens))
+    Node* root=nullptr;
+    if(parse(tokens,root)){
         cout << "Parsing successful!\n";
+        printTree(root,0);
+ 
+    }
     else
         cout << "Parsing failed.\n";
 

@@ -94,7 +94,12 @@ void printTree(Node* n, int depth )
     for(int i = 0; i < depth; i++)
         cout << "  ";
 
-    cout << symName(n->sym) << "\n";
+    cout << symName(n->sym) ;
+    if(n->sym == Symbol :: Number){
+      cout<<"("<<n->text<<")"<<endl;
+    }
+    else
+      cout<<endl;
 
     for(Node* c : n->kids)
         printTree(c, depth + 1);
@@ -120,7 +125,7 @@ bool parse(vector<Token>& tokens , Node*& outRoot)
     size_t pos = 0;
     Token current = tokens[pos];
     Symbol lookahead = tokenToSymbol(current);
-
+    
     while(!st.empty())
     {
         Symbol top = st.top();
@@ -133,9 +138,10 @@ bool parse(vector<Token>& tokens , Node*& outRoot)
 
             // consume
             pos++;
-            if(pos < tokens.size()){
+            if(pos < tokens.size()-1){
                 current = tokens[pos];
                 lookahead = tokenToSymbol(current);
+                
             } else {
                 lookahead = Symbol::EndOfFile;
             }
@@ -173,6 +179,10 @@ bool parse(vector<Token>& tokens , Node*& outRoot)
                 parent->kids.push_back(eps);
             } else {
                 Node* c = new Node{s};
+                if(s==Symbol::Number){
+
+                  c->text = current.text;
+                }
                 parent->kids.push_back(c);
                 children.push_back(c);
             }

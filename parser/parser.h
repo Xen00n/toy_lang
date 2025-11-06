@@ -3,7 +3,7 @@
 #include <vector>
 #include <stack>
 #include <map>
-
+#include <string>
 enum class Symbol {
     Number, Plus, Minus, Mul, Div, Leftbrac, Rightbrac, EndOfFile,
     E, E_, T, T_, F, Epsilon
@@ -11,6 +11,7 @@ enum class Symbol {
 struct Node
 {
     Symbol sym;
+    std::string text;
     std::vector<Node*> kids;
 };
 Symbol tokenToSymbol(const Token& tok);
